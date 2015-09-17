@@ -1,5 +1,6 @@
 from hitchtest import HitchPackage, utils
 from subprocess import check_output, call
+from hitchtest.environment import checks
 from os.path import join, exists
 from os import makedirs, chdir
 
@@ -30,6 +31,7 @@ class MemcachePackage(HitchPackage):
         self.libevent_directory = join(self.get_build_directory(), "memcache-libevent-{}".format(self.libevent_version))
         self.directory = join(self.get_build_directory(), "memcache-{}-with-libevent-{}".format(self.version, self.libevent_version))
         self.bin_directory = bin_directory
+        checks.packages(["build-essential", ])
 
     def verify(self):
         version_output = check_output([self.memcached, "-V"]).decode('utf8')
